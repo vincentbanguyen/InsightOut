@@ -16,7 +16,7 @@ struct WeekView: View {
         VStack {
             let data = createChartData(findSavedEmojis(entries))
             WeekPieChart(entries: data)
-                .padding(.bottom)
+                .padding(.bottom, 100)
             WeekPieChartLegend(entries: data)
         }
     }

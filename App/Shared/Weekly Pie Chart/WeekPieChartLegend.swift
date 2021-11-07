@@ -15,7 +15,7 @@ struct WeekPieChartLegend: View {
         GeometryReader { proxy in
             let width = proxy.size.width
             let total = calculateTotal(entries)
-            ScrollView {
+            VStack {
 
                 ForEach(entries) { entry in
                     HStack {
@@ -34,6 +34,7 @@ struct WeekPieChartLegend: View {
                         let percentage = frequency / total
                         Text(" \(String(format: "%.0f", round(percentage * 100)))%")
                             .font(Font.system(size: width * 0.1, weight: .bold))
+                            .foregroundColor(.black)
                     }
                     
                 }

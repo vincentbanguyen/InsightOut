@@ -22,8 +22,7 @@ struct OverviewView: View {
     
     @State private var selectedEmotion = 7
 
-    @State private var entries = [Date: [MoodEntry]]()
-    @State private var monthEntries = [Date: [MoodEntry]]()
+    @State private var entries = [MoodEntry]()
 
     let emotionLookup = [
         "happiness":0,
@@ -35,28 +34,21 @@ struct OverviewView: View {
         "anger":6,
         "all":7
     ]
-
+    
     var body: some View {
-        
-        ZStack{
-            
-            LinearGradient(gradient: Gradient(colors: [Color(emotionLookup.key(from: selectedEmotion) ?? "white"), .white]), startPoint: .top, endPoint: .bottom)
+        ZStack {
+            Color(.white)
                 .ignoresSafeArea()
-            
             VStack {
-                WeekView(entries: entries.values.flatMap { $0 })
-                MonthView(entries: monthEntries)
-            }.padding()
+                Spacer()
+                WeekView(entries: entries)
+                Spacer()
+            }
         }.onAppear(perform: load)
     }
-
+    
     func load() {
-        let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
-        entries = loader.moods(forWeekStarting: startDate)
-
-
-        let startDateForMonth = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
-        monthEntries = loader.moods(forWeekStarting: startDateForMonth)
+        entries = loader.moods(forDate: Date())
     }
 }
 

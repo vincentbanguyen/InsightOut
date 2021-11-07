@@ -11,7 +11,7 @@ import InsightOut
 struct HomeView: View {
     @EnvironmentObject var loader: Loader
     @State private var moodStatus = Mood.happiness
-    @State private var backgroundColor = Color("happiness")
+    @Binding var backgroundColor: Color
     @State private var colors = [Color]()
 
     var body: some View {
@@ -59,8 +59,9 @@ struct HomeView: View {
 }
 
 struct HomeView_Previews: PreviewProvider {
+    @State static var color = Color.yellow
     static var previews: some View {
-        HomeView()
+        HomeView(backgroundColor: $color)
             .environmentObject(MoodEntryRepository(context: CoreDataStack.preview.context))
     }
 }

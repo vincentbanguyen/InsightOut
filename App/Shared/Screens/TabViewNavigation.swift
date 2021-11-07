@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct TabViewNavigation: View {
+    @State private var backgroundColor = Color("happiness")
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(backgroundColor: $backgroundColor)
                 .tabItem {
                     Label("Home", systemImage: "house")
+                        .foregroundColor(.black)
                 }
             OverviewView()
                 .tabItem {
                     Label("Overview", systemImage: "calendar")
+                        .foregroundColor(.black)
                 }
         }
+        .accentColor(backgroundColor)
     }
 }
 
