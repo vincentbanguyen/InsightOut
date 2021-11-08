@@ -13,12 +13,14 @@ struct WeekView: View {
     let entries: [MoodEntry]
     
     var body: some View {
-        VStack {
-            let data = createChartData(findSavedEmojis(entries))
-            WeekPieChart(entries: data)
-                .padding(.bottom, 100)
-            WeekPieChartLegend(entries: data)
-        }
+            VStack {
+                let data = createChartData(findSavedEmojis(entries))
+                WeekPieChart(entries: data)
+                    .frame(width: 300, height: 300)
+                    .padding(.bottom, 30)
+                WeekPieChartLegend(entries: data)
+                    .frame(width: 300, height: 300)
+            }
     }
     
     func findSavedEmojis(_ entries: [MoodEntry]) -> [Mood] {

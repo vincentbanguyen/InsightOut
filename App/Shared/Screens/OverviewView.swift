@@ -40,9 +40,7 @@ struct OverviewView: View {
             Color(.white)
                 .ignoresSafeArea()
             VStack {
-                Spacer()
                 WeekView(entries: entries)
-                Spacer()
             }
         }.onAppear(perform: load)
     }

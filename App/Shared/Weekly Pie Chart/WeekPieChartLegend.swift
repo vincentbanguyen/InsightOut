@@ -16,9 +16,9 @@ struct WeekPieChartLegend: View {
             let width = proxy.size.width
             let total = calculateTotal(entries)
             VStack {
-
                 ForEach(entries) { entry in
                     HStack {
+                        Spacer()
                         ZStack {
                             Circle()
                                 .fill(Color(String(describing: entry.mood)))
@@ -35,11 +35,11 @@ struct WeekPieChartLegend: View {
                         Text(" \(String(format: "%.0f", round(percentage * 100)))%")
                             .font(Font.system(size: width * 0.1, weight: .bold))
                             .foregroundColor(.black)
+                        Spacer()
                     }
                     
                 }
             }
-            .frame(width: width, height: width * 0.5)
         }
     }
     func calculateTotal(_ entries: [ChartData]) -> CGFloat {
