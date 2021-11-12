@@ -10,7 +10,7 @@ import InsightOut
 
 struct WeekView: View {
     
-    let entries: [MoodEntry]
+    let entries: [Date: [MoodEntry]]
     let startWeekDate = { () -> String in
         let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
         return startDate.getFormattedDate(format: "MMMM d")
@@ -25,8 +25,12 @@ struct WeekView: View {
         VStack {
             Text("Mood Insight")
                 .font(Font.system(size: 50, weight: .semibold))
+                .padding(10)
+                .foregroundColor(.black)
             Text("\(startWeekDate()) - \(endWeekDate())")
                 .font(Font.system(size: 20, weight: .semibold))
+                .padding()
+                .foregroundColor(.black)
             let data = createChartData(findSavedEmojis(entries))
             WeekPieChart(entries: data)
                 .frame(width: 300, height: 300)
@@ -36,14 +40,17 @@ struct WeekView: View {
         }
     }
     
-    func findSavedEmojis(_ entries: [MoodEntry]) -> [Mood] {
+    func findSavedEmojis(_ entries: [Date: [MoodEntry]]) -> [Mood] {
         var savedEmojis: [Mood] = []
         for mood in Mood.allCases {
-            for entry in entries {
-                if mood == entry.mood {
-                    savedEmojis.append(entry.mood)
+            for (key, value) in entries {
+                for moodEntry in value {
+                    if mood == moodEntry.mood {
+                        savedEmojis.append(moodEntry.mood)
+                    }
                 }
             }
+            
         }
         return savedEmojis
     }
@@ -68,15 +75,15 @@ struct WeekView: View {
 struct WeekView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let entries: [MoodEntry] = {
-            var entries = [MoodEntry]()
+        let entries: [Date: [MoodEntry]] = {
+            var entries = [Date: [MoodEntry]]()
             let dates = (-30 ..< 30).map { day in
                 Calendar.current.date(byAdding: .day, value: day, to: Date())!
             }
             
             for date in dates {
                 let mood = Mood.allCases.randomElement()!
-                entries.append(MoodEntry(time: date, mood: mood))
+                entries[date] = [MoodEntry(time: date, mood: mood)]
             }
             return entries
         }()

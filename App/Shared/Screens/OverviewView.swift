@@ -37,7 +37,7 @@ struct OverviewView: View {
             Color(.white)
                 .ignoresSafeArea()
             VStack {
-                WeekView(entries: entries.values.flatMap { $0 })
+                WeekView(entries: entries)
             }
         }.onAppear(perform: load)
     }
