@@ -17,12 +17,9 @@ extension Dictionary where Value: Equatable {
 
 struct OverviewView: View {
     @EnvironmentObject var loader: Loader
-
     @State private var selectedTime = 0
-    
     @State private var selectedEmotion = 7
-
-    @State private var entries = [MoodEntry]()
+    @State private var entries = [Date: [MoodEntry]]()
 
     let emotionLookup = [
         "happiness":0,
@@ -40,13 +37,14 @@ struct OverviewView: View {
             Color(.white)
                 .ignoresSafeArea()
             VStack {
-                WeekView(entries: entries)
+                WeekView(entries: entries.values.flatMap { $0 })
             }
         }.onAppear(perform: load)
     }
     
     func load() {
-        entries = loader.moods(forDate: Date())
+        let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+        entries = loader.moods(forWeekStarting: startDate)
     }
 }
 
