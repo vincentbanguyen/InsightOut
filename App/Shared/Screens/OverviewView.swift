@@ -44,7 +44,7 @@ struct OverviewView: View {
     
     func load() {
         let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
-        entries = loader.moods(forWeekStarting: startDate)
+        entries = loader.moods(startDate: startDate, endDate: Date())
     }
 }
 
